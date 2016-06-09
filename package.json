@@ -1,0 +1,26 @@
+{
+  "name": "iot-webui",
+  "version": "1.0.0",
+  "description": "Web UI for freeuni-sdp iot(internet of things) project",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"no test intended\"", 
+    "start": "node server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/freeuni-sdp/iot-webui.git"
+  },
+  "author": "ggham",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/freeuni-sdp/iot-webui/issues"
+  },
+  "homepage": "https://github.com/freeuni-sdp/iot-webui#readme",
+  "dependencies": {
+    "express": "^4.13.4"
+  }, 
+  "engines": {
+    "node": "6.2.1"
+  }
+}
