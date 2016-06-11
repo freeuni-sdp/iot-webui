@@ -3,27 +3,64 @@
  */
 
 function ping(url,index){
-    var startTime = new Date();
+    var startPingTime = new Date();
     $.ajax({
         type: 'GET',
-        async: true,
         cache: false,
         url: url,
-        dataType: 'html',
+        dataType: 'json',
         statusCode: {
-            404: function() {
-
+            500: function() { //server error
+                setWarning(index);
             },
-            503: function() {
-
+            404: function() { // not found
+                setNotFound(index);
             },
-            200: function() {
-
+            503: function() { //timeout
+                setWarning(index);
+            },
+            200: function() { // success
+                setSuccess(index);
             }
         },
-
-        timeout: timeout
+        complete: function(){
+            var period = new Date() - startPingTime;
+            //console.log("comlete " + period );
+            setPingStatus(period,index);
+            makePing(url,index);
+        }
     });
-
-
 }
+
+function makePing(url,index){
+    setTimeout( function(){
+        ping(url, index );
+    }, 10000);
+}
+
+function setPingStatus(time,index){
+    $('table tbody tr').eq(index).children().eq(2).html(time);
+}
+
+function setNotFound(index){
+    $('table tbody tr').eq(index).children().eq(2).addClass('table-danger');
+}
+
+function setWarning(index){
+    $('table tbody tr').eq(index).children().eq(2).addClass('table-warning');
+}
+
+function setSuccess(index){
+    $('table tbody tr').eq(index).children().eq(2).addClass('table-success');
+}
+
+
+
+$(document).ready(function () {
+    $('table tbody tr ').each(function (index){
+       var url = ($(this).children().eq(1).html());
+       ping(url,index);
+    });
+});
+
+
