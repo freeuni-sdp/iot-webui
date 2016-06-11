@@ -8,7 +8,7 @@ function ping(url,index){
         type: 'GET',
         cache: false,
         url: url,
-        dataType: 'json',
+        dataType: 'jsonp',
         statusCode: {
             500: function() { //server error
                 setWarning(index);
@@ -25,7 +25,7 @@ function ping(url,index){
         },
         complete: function(){
             var period = new Date() - startPingTime;
-            //console.log("comlete " + period );
+          //  setWarning(index);
             setPingStatus(period,index);
             makePing(url,index);
         }
