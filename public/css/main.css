@@ -1,3 +1,11 @@
 #content{
-	padding-top: 50px;
+	padding-top: 70px;
+}
+
+.dropdown{
+	padding-right: 100px;
+}
+
+.dropdown-item#selected {
+	background-color: #666699;
 }
