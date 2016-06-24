@@ -39,28 +39,26 @@ function makePing(url,index){
 }
 
 function setPingStatus(time,index){
-    $('table tbody tr').eq(index).children().eq(2).html(time);
+    $('table tbody tr.tr-status').eq(index).children().eq(2).html(time);
 }
 
 function setNotFound(index){
-    $('table tbody tr').eq(index).children().eq(2).addClass('table-danger');
+    $('table tbody tr.tr-status').eq(index).children().eq(2).addClass('table-danger');
 }
 
 function setWarning(index){
-    $('table tbody tr').eq(index).children().eq(2).addClass('table-warning');
+    $('table tbody tr.tr-status').eq(index).children().eq(2).addClass('table-warning');
 }
 
 function setSuccess(index){
-    $('table tbody tr').eq(index).children().eq(2).addClass('table-success');
+    $('table tbody tr.tr-status').eq(index).children().eq(2).addClass('table-success');
 }
 
 
 
 $(document).ready(function () {
-    $('table tbody tr ').each(function (index){
+    $('table tbody tr.tr-status').each(function (index){
        var url = ($(this).children().eq(1).html());
        ping(url,index);
     });
 });
-
-

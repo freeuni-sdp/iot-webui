@@ -16,15 +16,20 @@ function initHousesDropdown(result) {
       dropdownList.append('<div class="dropdown-item">' + housesList[i].name._ + '</div>');
     }
   }
-}
 
-$(document).ready(function() {
   $('.dropdown .dropdown-item').click(function(){
     $('.dropdown-item#selected').removeAttr('id');
     $(this).attr('id', 'selected');
     currentlySelectedHouse = housesList[$(this).index()];
+    refresh();
   });
+}
 
+function refresh() {
+  load(window.location.pathname);
+}
+
+$(document).ready(function() {
   $.ajax({
     type: 'GET',
     url: housesApiRoutes.getAllHouses,

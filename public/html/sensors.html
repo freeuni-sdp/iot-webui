@@ -1,0 +1,110 @@
+<script type="text/javascript" src="/js/sensors.js"></script>
+<div class="row">
+  <div class="col-sm-4">
+    <div class="card">
+      <h4 class="card-header">Room Thermometer</h4>
+      <div class="card-block">
+        <table class="table">
+          <thead>
+            <tr>
+              <th>Floor #</th>
+              <th>Temperature</th>
+            </tr>
+          </thead>
+          <tbody id="room-thermometer">
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+  <div class="col-sm-6 pull-xs-right">
+    <div class="card">
+      <h4 class="card-header">Bath Humidity Sensor</h4>
+      <div class="card-block">
+        <table class="table">
+          <thead>
+            <tr>
+              <th>Room #</th>
+              <th>Humidity</th>
+              <th>Measurement Time</th>
+            </tr>
+          </thead>
+          <tbody id="bath-humidity-sensor">
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="row">
+  <div class="col-sm-6">
+    <div class="card">
+      <h4 class="card-header">Bath Light sensor</h4>
+      <div class="card-block">
+        <table class="table">
+          <thead>
+            <tr>
+              <th>Room #</th>
+              <th>Light</th>
+              <th>Light Switch Time</th>
+            </tr>
+          </thead>
+          <tbody id="bath-light-sensor">
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+  <div class="col-sm-6 pull-xs-right">
+    <div class="card">
+      <h4 class="card-header">Soil Moisture Sensor</h4>
+      <div class="card-block">
+        <table class="table">
+          <thead>
+            <tr>
+              <th>Sensor ID</th>
+              <th>Sensor Value</th>
+              <th>Available</th>
+            </tr>
+          </thead>
+          <tbody id="soil-moisture-sensor">
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="row">
+  <div class="col-sm-6">
+    <div class="card">
+      <h4 class="card-header">Router</h4>
+      <div class="card-block">
+        <div class="row">
+          <div class="col-sm-7">
+            <div class="card">
+              <h5 class="card-header">Devices</h5>
+              <div class="card-block">
+                <table class="table">
+                  <thead>
+                    <tr>
+                      <th>Name</th>
+                      <th>Mac Address</th>
+                    </tr>
+                  </thead>
+                  <tbody id="mac-addresses">
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+          <div class="list-group col-sm-4 pull-xs-right">
+            <a class="list-group-item disabled">Owner At Home</a>
+            <a class="list-group-item" id="owner-at-home"></a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
