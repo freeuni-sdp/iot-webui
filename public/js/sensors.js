@@ -36,19 +36,12 @@ var bathLightRoutes = {
 function updateBathLightUI(result) {
   var bathLightTable = $('tbody#bath-light-sensor');
   bathLightTable.empty();
-  for (let elem of result.rooms) {
-    var lightStatusString = elem.is_light_on ? 'On' : 'Off';
-    insertTableRow(bathLightTable, [
-      elem.room_id,
-      lightStatusString,
-      elem.light_switch_time
-    ]);
-  }
+  insertTableRow(bathLightTable, [result.status ? 'On': 'Off', result.time]);
 }
 
 function loadBathLightReadings() {
   // mock doesn't work on real house id, it has to be string house_id
-  var finalUrl = bathLightRoutes.baseUrl + 'house_id';//currentlySelectedHouse.RowKey._;
+  var finalUrl = bathLightRoutes.baseUrl + currentlySelectedHouse.RowKey._;
   $.ajax({
     type: 'GET',
     url: finalUrl,
