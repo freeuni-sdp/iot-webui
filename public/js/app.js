@@ -30,6 +30,9 @@ $(document).ready(function() {
 		var routeMap = {
 			'/pingstatus': function(){
 				$('#content').load('/html/pingstatus.html');
+			},
+			'/switches' : function(){
+				$('#content').load('/html/switches.html');
 			}
 		};
 		routeMap[route]();
