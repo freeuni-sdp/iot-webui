@@ -11,6 +11,7 @@ function initHousesDropdown(result) {
   for (var i in housesList) {
     if (i == 0) {
       currentlySelectedHouse = housesList[i];
+      onHouseDataLoaded();
       dropdownList.append('<div class="dropdown-item" id="selected">' + housesList[i].name._ + '</div>');
     } else {
       dropdownList.append('<div class="dropdown-item">' + housesList[i].name._ + '</div>');
