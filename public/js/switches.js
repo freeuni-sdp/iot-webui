@@ -15,6 +15,8 @@ var sprinklerSwitchStateParams = {
     timeout: 60
 };
 
+var timeIntervalSprinklerSwitch;
+
 $(document).ready(function() {
     sendAjax('GET',sprinklerSwitchState,'',"sprinklerSwitchState");
     sendAjax('GET',houseHeatingSwitch,'',"houseHeatingSwitch");
@@ -124,6 +126,17 @@ function getSprinklerStatus(result) {
     $('#sprinkler-switch-current-state').html(result.status);
     $('#sprinkler-switch-current-time').html(result.seconds_left);
     document.getElementById("sprinkler-switch-change-state").checked = result.status == "on" ? true : false;
+    if(result.status == "on") {
+        timeIntervalSprinklerSwitch = setInterval(function () {
+            var t = $('#sprinkler-switch-current-time').html();
+            $('#sprinkler-switch-current-time').html(t - 1);
+            if (t <= 0) {
+                $('#sprinkler-switch-current-time').html('0');
+                clearInterval(timeIntervalSprinklerSwitch);
+                sendAjax('GET',sprinklerSwitchState,'',"sprinklerSwitchState");
+            }
+        }, 1000);
+    }
 }
 
 
