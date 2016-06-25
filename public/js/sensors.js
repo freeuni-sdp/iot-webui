@@ -59,6 +59,29 @@ function loadBathLightReadings() {
   });
 }
 
+var bathHumidityRoutes = {
+  lastMeasurement: 'http://private-anon-a083cdbb1-iotbathhumiditysensor.apiary-mock.com/webapi/houses/'
+}
+
+function updateBathHumidityUI(result) {
+  for (let hum of result) {
+    insertTableRow(
+      $('tbody#bath-humidity-sensor'),
+      [hum.humidity, hum.measurement_time]
+    );
+  }
+}
+
+function loadBathHumidityReadings() {
+  var finalUrl = bathHumidityRoutes.lastMeasurement + currentlySelectedHouse.RowKey._;
+  $.ajax({
+    type: 'GET',
+    url: finalUrl,
+    success: updateBathHumidityUI,
+    error: logError
+  });
+}
+
 var soilMoistureRoutes = {
   baseUrl: 'https://private-anon-ccd5374bf-sdp2.apiary-mock.com/house/'
 }
@@ -127,6 +150,7 @@ function loadRouterReadings() {
 $(document).ready(function() {
   setTimeout(loadThermometerReadings, 1000);
   setTimeout(loadBathLightReadings, 1000);
+  setTimeout(loadBathHumidityReadings, 1000);
   setTimeout(loadSoilMoistureReadings, 1000);
   setTimeout(loadRouterReadings, 1000);
 })
