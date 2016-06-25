@@ -11,20 +11,32 @@
     <h4 class="card-header">Temperature Scheduler</h4>
     <div class="panel panel-info" id="">
         <div class="row">
-            <div class="col-sm-4">
+            <div class="col-sm-3">
                 <div>
                    <div>start time</div>
                     <input type="datetime-local" id="start-date"/>
+                    <input type="datetime-local" id="start-dateSet" style="margin-top: 20px"/>
                 </div>
             </div>
-            <div class="col-sm-4">
-                <div style="margin-left: 20px">
+            <div class="col-sm-3">
+                <div style="margin-left: 5px">
                     <div>end time</div>
                     <input type="datetime-local" id="end-date"/>
+                    <input type="datetime-local" id="end-dateSet" style="margin-top: 20px"/>
                 </div>
             </div>
             <div class="col-sm-2">
-                    <button type="button" id="submit" style="margin-left: 100px;margin-top: 18px;" class="btn btn-info">Get Info</button>
+                <select id="floors" style="margin-left: 80px; margin-top: 20px;">
+                    <option value="1">Floor#1</option>
+                    <option value="2">Floor#2</option>
+                    <option value="3">Floor#3</option>
+                </select>
+                <input type="number" id="temperature" placeholder="Temp" style="margin-left: 80px;margin-top: 30px; width: 60px;height: 30px;">
+            </div>
+
+            <div class="col-sm-2">
+                    <button type="button" id="submit" style="margin-left: 60px;margin-top: 15px;" class="btn btn-info">Get Scheduler</button>
+                    <button type="button" id="submitSet" style="margin-left: 60px;margin-top: 18px;" class="btn btn-warning">Set Scheduler</button>
                 </div>
             </div>
         </div>
