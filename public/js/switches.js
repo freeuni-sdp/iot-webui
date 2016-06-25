@@ -7,6 +7,8 @@ var sprinklerSwitchChangeState = "https://private-anon-c802c2370-sprinklerswitch
 var houseHeatingSwitch = "http://private-anon-293e85fef-iotheatingswitch.apiary-mock.com/house/" + currentHouse;
 var houseHeatingOn = "https://private-anon-293e85fef-iotheatingswitch.apiary-mock.com/house/" + currentHouse + "/floor/";
 var houseHeatingOff ="https://private-anon-293e85fef-iotheatingswitch.apiary-mock.com/house/" + currentHouse  + "/floor/";
+var bathVentStatus = "http://private-anon-86028f42b-iotbathventswitch.apiary-mock.com/houses/" + currentHouse;
+var bathVentManual = "https://private-anon-67c972f5e-iotbathventswitch.apiary-mock.com/house/" + currentHouse +"/action/";
 
 var sprinklerSwitchStateParams = {
     set_status: "on",
@@ -16,8 +18,9 @@ var sprinklerSwitchStateParams = {
 $(document).ready(function() {
     sendAjax('GET',sprinklerSwitchState,'',"sprinklerSwitchState");
     sendAjax('GET',houseHeatingSwitch,'',"houseHeatingSwitch");
+    sendAjax('GET',bathVentStatus,'',"bathVentStatus");
     $("#sprinkler-switch-change-state").change(function () {
-        if($(this).attr('checked')){
+        if($(this)[0].checked){
             sprinklerSwitchStateParams.set_status = "on";
         }else{
             sprinklerSwitchStateParams.set_status = "off"
@@ -47,10 +50,29 @@ $(document).ready(function() {
                 type: 'DELETE',
                 url: houseHeatingOff + number,
                 complete : function(){
-                    sendAjax('GET',houseHeatingSwitch,'',"houseHeatingSwitch");
+                    sendAjax('GET',bathVentStatus,'',"bathVentStatus");
                 }
             });
         }
+    });
+
+    $("#bath-vent-manual").change(function (){
+        var link = bathVentManual;
+        console.log($(this));
+        if($(this)[0].checked){
+            link +="on";
+        }else{
+            link +="off";
+        }
+        $.ajax({
+            type: 'PUT',
+            url: link,
+            dataType: 'json',
+            complete : function(){
+                sendAjax('GET',bathVentStatus,'',"bathVentStatus");
+            }
+        });
+
     });
 });
 
@@ -61,7 +83,6 @@ function sendAjax(method,link,params,type) {
         dataType: 'json',
         data: params,
         success: function (result) {
-            console.log(link);
             initial(result,type);
         }
     });
@@ -78,9 +99,16 @@ function initial(result,type){
         case "houseHeatingSwitch":
             getHouseHeatingInfo(result);
             break;
+        case "bathVentStatus":
+            getBathStatus(result);
         default :
             break;
     }
+}
+
+
+function getBathStatus(result){
+    $("#bath-vent-status").html(result.status);
 }
 
 function setSprinklerStatus(){
@@ -89,7 +117,7 @@ function setSprinklerStatus(){
 }
 
 function updateHeatingInfo(result){
-
+    $("#bath-vent-status").html(result.status);
 }
 
 function getSprinklerStatus(result) {
