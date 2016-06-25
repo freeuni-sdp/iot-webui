@@ -6,5 +6,49 @@
 </head>
 <body>
 
+<div class="row">
+    <h4 class="card-header">Temperature Scheduler</h4>
+    <div class="panel panel-info" id="">
+        <div class="row">
+            <div class="col-sm-4">
+                <div>
+                   <div>start time</div>
+                    <input type="datetime-local"/>
+                </div>
+            </div>
+            <div class="col-sm-4">
+                <div style="margin-left: 60px">
+                    <div>end time</div>
+                    <input type="datetime-local"/>
+                </div>
+            </div>
+            <div class="col-sm-2">
+                    <button type="button" style="margin-left: 100px;margin-top: 18px;" class="btn btn-info">Get Info</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="card-block">
+        <h4 class="card-header">Temperature Scheduler Info</h4>
+        <table class="table">
+            <thead>
+            <tr>
+                <th>Start Time</th>
+                <th>End Time</th>
+                <th>Temperature</th>
+            </tr>
+            </thead>
+            <tbody id="temp-result">
+
+            </tbody>
+        </table>
+    </div>
+
+</div>
+
+
 </body>
 </html>
