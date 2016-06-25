@@ -4,6 +4,7 @@ var sprinklerSchedulerApiRoutes = {
 };
 
 function updateSprinklerSchedulerUI(result) {
+  $('#update').removeAttr('disabled');
   $('#start-month').val(result.startMonth);
   $('#end-month').val(result.endMonth);
   $('#after-sunrise').val(result.afterSunRise);
