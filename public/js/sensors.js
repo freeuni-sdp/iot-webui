@@ -3,6 +3,14 @@ var thermometerRoutes = {
   floorsSufix: '/floors/'
 };
 
+function logError(xhr,textStatus,err) {
+  console.log("readyState: " + xhr.readyState);
+  console.log("responseText: "+ xhr.responseText);
+  console.log("status: " + xhr.status);
+  console.log("text status: " + textStatus);
+  console.log("error: " + err);
+}
+
 function insertTableRow(domElement, entries) {
   domElement.append('<tr>');
   for (let entry of entries) {
@@ -25,7 +33,8 @@ function loadThermometerReadings() {
   $.ajax({
     type: 'GET',
     url: finalUrl,
-    success: updateThermometerUI
+    success: updateThermometerUI,
+    error: logError
   })
 }
 
@@ -45,7 +54,8 @@ function loadBathLightReadings() {
   $.ajax({
     type: 'GET',
     url: finalUrl,
-    success: updateBathLightUI
+    success: updateBathLightUI,
+    error: logError
   });
 }
 
@@ -68,7 +78,8 @@ function loadSoilMoistureReadings() {
   $.ajax({
     type: 'GET',
     url: finalUrl,
-    success: updateSoilMoistureView
+    success: updateSoilMoistureView,
+    error: logError
   })
 }
 
@@ -97,18 +108,19 @@ function loadRouterReadings() {
     routerApiRoutes.deviceListSufix;
   var homeOwnerUrl = routerApiRoutes.baseUrl + currentlySelectedHouse.RowKey._ +
     routerApiRoutes.ownerAtHomeSufix;
-  console.log(devicesUrl);
   $.ajax({
     type: 'GET',
     dataType: 'json',
     url: devicesUrl,
-    success: updateDevicesUI
+    success: updateDevicesUI,
+    error: logError
   });
   $.ajax({
     type: 'GET',
     dataType: 'json',
     url: homeOwnerUrl,
-    success: updateOwnerAtHome
+    success: updateOwnerAtHome,
+    error: logError
   });
 }
 
