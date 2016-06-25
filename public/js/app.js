@@ -10,6 +10,10 @@ var routeMap = {
 	'/sensors': function(){
 		clearAllTimeouts();
 		$('#content').load('/html/sensors.html');
+	},
+	'/temperature-scheduler': function(){
+		clearAllTimeouts();
+		$('#content').load('/html/temperature-scheduler.html');
 	}
 };
 
