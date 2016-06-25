@@ -34,7 +34,7 @@
                 <input id="sprinkler-switch-change-state" type="checkbox" />
             </div>
             <div class="col-sm-1">
-                <input id="sprinkler-switch-change-time" type="number" style="width: 60px" />
+                <input id="sprinkler-switch-change-time" type="number" style="width: 50px;height: 20px" />
             </div>
         </div>
     </div>
@@ -42,23 +42,52 @@
 </div>
 
 <div class="row">
-    <div class="col-sm-6">
-        <div class="card">
-            <h4 class="card-header">heating-switch status</h4>
-            <div class="card-block">
-                <table class="table">
-                    <thead>
-                    <tr>
-                        <th>Floor#</th>
-                        <th>Status</th>
-                        <th>available</th>
-                    </tr>
-                    </thead>
-                    <tbody id="heating-switch-tb">
+        <div class="col-sm-4">
+            <div class="card">
+                <h4 class="card-header">heating-switch status</h4>
+                <div class="card-block">
+                    <table class="table">
+                        <thead>
+                        <tr>
+                            <th>Floor#</th>
+                            <th>Status</th>
+                            <th>available</th>
+                        </tr>
+                        </thead>
+                        <tbody id="heating-switch-tb">
 
-                    </tbody>
-                </table>
+                        </tbody>
+                    </table>
+                </div>
             </div>
+        </div>
+        <div class="col-sm-5">
+            <div class="card">
+                <h4 class="card-header">heating-switch manual</h4>
+                <div class="card-block">
+                    <table class="table">
+                        <thead>
+                        <tr>
+                            <th>On/Off</th>
+                            <th>Period</th>
+                        </tr>
+                        </thead>
+                        <tbody id="heating-switch-tb-manual">
+                            <tr>
+                                <td> <input class="checkbox" type="checkbox" id="heater-floor-c-1"/> </td>
+                                <td> <input type="number" id="heater-floor1-n-1" style="width: 50px;height: 20px"/> </td>
+                            </tr>
+                            <tr>
+                                <td> <input class="checkbox" type="checkbox" id="heater-floor-c-2"/> </td>
+                                <td> <input type="number" id="heater-floor1-n-2" style="width: 50px;height: 20px"/> </td>
+                            </tr>
+                            <tr>
+                                <td> <input class="checkbox" type="checkbox" id="heater-floor-c-3"/> </td>
+                                <td> <input type="number" id="heater-floor1-n-3" style="width: 50px;height: 20px"/> </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
         </div>
     </div>
 </div>
