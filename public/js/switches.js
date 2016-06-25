@@ -9,6 +9,8 @@ var houseHeatingOn = "https://private-anon-293e85fef-iotheatingswitch.apiary-moc
 var houseHeatingOff ="https://private-anon-293e85fef-iotheatingswitch.apiary-mock.com/house/" + currentHouse  + "/floor/";
 var bathVentStatus = "http://private-anon-86028f42b-iotbathventswitch.apiary-mock.com/houses/" + currentHouse;
 var bathVentManual = "https://private-anon-67c972f5e-iotbathventswitch.apiary-mock.com/house/" + currentHouse +"/action/";
+var airConditioningRoute = "http://private-anon-d79c364e6-airconditioningswitch.apiary-mock.com/webapi/houses/";
+
 
 var sprinklerSwitchStateParams = {
     set_status: "on",
@@ -17,10 +19,35 @@ var sprinklerSwitchStateParams = {
 
 var timeIntervalSprinklerSwitch;
 
+function onHouseDataLoaded() {
+    updateConditioningStatus();
+}
+
+function updateConditioningStatus() {
+    $.ajax({
+        type: 'GET',
+        url: airConditioningRoute + currentlySelectedHouse.RowKey._,
+        dataType: 'json',
+        success: function(res) {
+            $('select#air-conditioning').val(res.status);
+        }
+    });
+}
+
+
 $(document).ready(function() {
     sendAjax('GET',sprinklerSwitchState,'',"sprinklerSwitchState");
     sendAjax('GET',houseHeatingSwitch,'',"houseHeatingSwitch");
     sendAjax('GET',bathVentStatus,'',"bathVentStatus");
+
+    $('select#air-conditioning').change(function() {
+        $.ajax({
+            type: 'POST',
+            url: airConditioningRoute + currentlySelectedHouse.RowKey._,
+            data: JSON.stringify({'status': $(this).val()})
+        });
+    })
+
     $("#sprinkler-switch-change-state").change(function () {
         if($(this)[0].checked){
             sprinklerSwitchStateParams.set_status = "on";
