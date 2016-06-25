@@ -19,10 +19,6 @@ var sprinklerSwitchStateParams = {
 
 var timeIntervalSprinklerSwitch;
 
-function onHouseDataLoaded() {
-    updateConditioningStatus();
-}
-
 function updateConditioningStatus() {
     $.ajax({
         type: 'GET',
@@ -36,10 +32,14 @@ function updateConditioningStatus() {
 
 
 $(document).ready(function() {
+    if (currentlySelectedHouse){
+        updateConditioningStatus();
+    } else {
+        registerObserver(updateConditioningStatus);
+    }
     sendAjax('GET',sprinklerSwitchState,'',"sprinklerSwitchState");
     sendAjax('GET',houseHeatingSwitch,'',"houseHeatingSwitch");
     sendAjax('GET',bathVentStatus,'',"bathVentStatus");
-
     $('select#air-conditioning').change(function() {
         $.ajax({
             type: 'POST',

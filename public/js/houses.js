@@ -4,6 +4,11 @@ var housesApiRoutes = {
 
 var currentlySelectedHouse = undefined;
 var housesList = undefined;
+var observers = []
+
+function registerObserver(fun) {
+  observers.push(fun);
+}
 
 function initHousesDropdown(result) {
   housesList = result
@@ -11,7 +16,10 @@ function initHousesDropdown(result) {
   for (var i in housesList) {
     if (i == 0) {
       currentlySelectedHouse = housesList[i];
-      onHouseDataLoaded();
+      for (let observer of observers) {
+        observer();
+      }
+      observers = [];
       dropdownList.append('<div class="dropdown-item" id="selected">' + housesList[i].name._ + '</div>');
     } else {
       dropdownList.append('<div class="dropdown-item">' + housesList[i].name._ + '</div>');

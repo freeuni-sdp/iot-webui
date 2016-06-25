@@ -14,6 +14,10 @@ var routeMap = {
 	'/temperature-scheduler': function(){
 		clearAllTimeouts();
 		$('#content').load('/html/temperature-scheduler.html');
+	},
+	'/sprinkler-scheduler': function() {
+		clearAllTimeouts();
+		$('#content').load('/html/sprinkler-scheduler.html');
 	}
 };
 

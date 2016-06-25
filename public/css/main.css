@@ -9,3 +9,7 @@
 .dropdown-item#selected {
 	background-color: #666699;
 }
+
+.list_input{
+	width: 100%;
+}
