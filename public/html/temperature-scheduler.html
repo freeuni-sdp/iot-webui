@@ -2,7 +2,8 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title></title>
+    <title>Temperature Scheduler</title>
+    <script type="text/javascript" src="js/temp-scheduler.js"></script>
 </head>
 <body>
 
@@ -13,17 +14,17 @@
             <div class="col-sm-4">
                 <div>
                    <div>start time</div>
-                    <input type="datetime-local"/>
+                    <input type="datetime-local" id="start-date"/>
                 </div>
             </div>
             <div class="col-sm-4">
-                <div style="margin-left: 60px">
+                <div style="margin-left: 20px">
                     <div>end time</div>
-                    <input type="datetime-local"/>
+                    <input type="datetime-local" id="end-date"/>
                 </div>
             </div>
             <div class="col-sm-2">
-                    <button type="button" style="margin-left: 100px;margin-top: 18px;" class="btn btn-info">Get Info</button>
+                    <button type="button" id="submit" style="margin-left: 100px;margin-top: 18px;" class="btn btn-info">Get Info</button>
                 </div>
             </div>
         </div>
