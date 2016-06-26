@@ -89,11 +89,8 @@ var soilMoistureRoutes = {
 function updateSoilMoistureView(result) {
   var soilMoistureTable = $('tbody#soil-moisture-sensor');
   soilMoistureTable.empty();
-  for (let value of result.values) {
-    var available = value.available ? 'Yes' : 'No';
-    insertTableRow(soilMoistureTable, [value.sensorId, value.sensorValue,
-      available]);
-  }
+  var available = result.available ? 'Yes' : 'No';
+  insertTableRow(soilMoistureTable, [result.sensorValue, available]);
 }
 
 function loadSoilMoistureReadings() {
