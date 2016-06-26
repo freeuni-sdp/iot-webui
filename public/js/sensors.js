@@ -90,7 +90,7 @@ function updateSoilMoistureView(result) {
   var soilMoistureTable = $('tbody#soil-moisture-sensor');
   soilMoistureTable.empty();
   var available = result.available ? 'Yes' : 'No';
-  insertTableRow(soilMoistureTable, [result.sensorValue, available]);
+  insertTableRow(soilMoistureTable, [result.sensorValueMessage, available]);
 }
 
 function loadSoilMoistureReadings() {
