@@ -60,8 +60,12 @@ function loadBathLightReadings() {
 }
 
 var bathHumidityRoutes = {
-  lastMeasurement: 'http://private-anon-a083cdbb1-iotbathhumiditysensor.apiary-mock.com/webapi/houses/'
+  lastMeasurement: 'http://private-anon-a083cdbb1-iotbathhumiditysensor.apiary-mock.com/webapi/houses/',
+  num_measurements: '/num_measurements/'
 }
+
+// we display only last four measurements
+var numMeasurementsToDisplay = 4;
 
 function updateBathHumidityUI(result) {
   for (let hum of result) {
@@ -73,7 +77,9 @@ function updateBathHumidityUI(result) {
 }
 
 function loadBathHumidityReadings() {
-  var finalUrl = bathHumidityRoutes.lastMeasurement + currentlySelectedHouse.RowKey._;
+  var finalUrl = bathHumidityRoutes.lastMeasurement +
+    currentlySelectedHouse.RowKey._ + bathHumidityRoutes.num_measurements +
+    numMeasurementsToDisplay;
   $.ajax({
     type: 'GET',
     url: finalUrl,
