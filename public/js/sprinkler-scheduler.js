@@ -39,6 +39,8 @@ function deleteFromExclutions() {
 
 function addToExclutions() {
   var inputReading = $('input#new-day-input').val();
+  if (!inputReading)
+    return;
   // to get the format we need
   inputReading = inputReading.
     split('-').
@@ -84,6 +86,8 @@ $(document).ready(function() {
     deleteFromExclutions();
   });
   $(document).on('click', '.dynamic-list .list-group-item', function () {
+    if ($(this).hasClass('disabled'))
+      return;
     $(this).parent().find('.active').removeClass('active');
     $(this).addClass('active');
   });
