@@ -3,8 +3,19 @@
  */
 var floor = 1;
 var temperatureScheduler = "https://private-09e97-iottemperaturescheduler.apiary-mock.com/webapi/houses/";
+var houseHeatingSwitch = "https://private-anon-945ad82df-iotheatingswitch.apiary-mock.com/house/";
 
 function ajaxFunctionAfterHouseLoad(){
+
+    $.ajax({
+        type: 'GET',
+        url: houseHeatingSwitch + currentlySelectedHouse.RowKey._,
+        dataType: 'json',
+        success: function (res) {
+            drawFloors(res);
+        }
+    });
+
     $("#submit").click(function (){
         var stardate = $("#start-date").val() + ":00";
         stardate = stardate.replace("T"," ");
@@ -66,4 +77,11 @@ function drawScheduler(res){
         table.append("<td>" + value.temperature + "</td>");
         table.append("</tr>");
     }
+}
+
+function drawFloors(result){
+    jQuery.each(result.switches, function(i, value) {
+        floorOption = document.getElementById('floors');
+        floorOption.options[floorOption.options.length] = new Option('Floor#'+value.id, value.id);
+    });
 }
