@@ -2,14 +2,9 @@
  * Created by root_pc on 6/25/2016.
  */
 var floor = 1;
-var temperatureScheduler = "https://private-09e97-iottemperaturescheduler.apiary-mock.com/webapi/houses/"
-                            + currentHouse + "/floors/";
-var setTemperatureScheduler = "https://private-09e97-iottemperaturescheduler.apiary-mock.com/webapi/houses/"
-                             + currentHouse + "/floors/";
+var temperatureScheduler = "https://private-09e97-iottemperaturescheduler.apiary-mock.com/webapi/houses/";
 
-
-$(document).ready(function() {
-    invokeAfterHousesLoaded(setCurrentHouse);
+function ajaxFunctionAfterHouseLoad(){
     $("#submit").click(function (){
         var stardate = $("#start-date").val() + ":00";
         stardate = stardate.replace("T"," ");
@@ -18,7 +13,7 @@ $(document).ready(function() {
         var floor = $("#floors").val();
         $.ajax({
             type: 'GET',
-            url: temperatureScheduler +  floor + "/schedule?start?"+stardate +"&end?"+enddate,
+            url: temperatureScheduler +  currentlySelectedHouse.RowKey._ + "/floors/" + floor + "/schedule?start?"+stardate +"&end?"+enddate,
             dataType: 'json',
             success: function(res) {
                 drawScheduler(res);
@@ -40,11 +35,11 @@ $(document).ready(function() {
         }
         $.ajax({
             type: 'POST',
-            url: temperatureScheduler +  floor,
+            url: temperatureScheduler + currentlySelectedHouse.RowKey._ + "/floors/" + floor,
             data: data,
             dataType: 'json',
             success: function(res) {
-               alert("Schedule Updated !");
+                alert("Schedule Updated !");
             },
             complete: function(res){
                 if(res.status == 200){
@@ -53,6 +48,12 @@ $(document).ready(function() {
             }
         });
     });
+}
+
+
+$(document).ready(function() {
+    invokeAfterHousesLoaded(ajaxFunctionAfterHouseLoad);
+
 });
 
 function drawScheduler(res){
