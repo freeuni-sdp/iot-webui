@@ -4,10 +4,15 @@ var housesApiRoutes = {
 
 var currentlySelectedHouse = undefined;
 var housesList = undefined;
-var observers = []
+var houseInfoLoadedObservers = []
 
-function registerObserver(fun) {
-  observers.push(fun);
+function invokeAfterHousesLoaded(fun) {
+  if (currentlySelectedHouse) {
+    fun();
+  } else {
+    console.log('loading');
+    houseInfoLoadedObservers.push(fun);
+  }
 }
 
 function initHousesDropdown(result) {
@@ -16,10 +21,10 @@ function initHousesDropdown(result) {
   for (var i in housesList) {
     if (i == 0) {
       currentlySelectedHouse = housesList[i];
-      for (let observer of observers) {
+      for (let observer of houseInfoLoadedObservers) {
         observer();
       }
-      observers = [];
+      houseInfoLoadedObservers = [];
       dropdownList.append('<div class="dropdown-item" id="selected">' + housesList[i].name._ + '</div>');
     } else {
       dropdownList.append('<div class="dropdown-item">' + housesList[i].name._ + '</div>');

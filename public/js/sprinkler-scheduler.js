@@ -91,11 +91,6 @@ $(document).ready(function() {
     $(this).parent().find('.active').removeClass('active');
     $(this).addClass('active');
   });
-  if (currentlySelectedHouse) {
-    loadSprinklerSchedulerReadings();
-  } else {
-    console.log('observing');
-    registerObserver(loadSprinklerSchedulerReadings);
-  }
 
+  invokeAfterHousesLoaded(loadSprinklerSchedulerReadings);
 });

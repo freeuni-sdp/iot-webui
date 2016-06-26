@@ -145,9 +145,13 @@ function loadRouterReadings() {
 }
 
 $(document).ready(function() {
-  setTimeout(loadThermometerReadings, 1000);
-  setTimeout(loadBathLightReadings, 1000);
-  setTimeout(loadBathHumidityReadings, 1000);
-  setTimeout(loadSoilMoistureReadings, 1000);
-  setTimeout(loadRouterReadings, 1000);
+  // add wrapper to make sure houses info loads first
+  invokeAfterHousesLoaded(function() {
+    console.log('triggering');
+    setTimeout(loadThermometerReadings, 1000);
+    setTimeout(loadBathLightReadings, 1000);
+    setTimeout(loadBathHumidityReadings, 1000);
+    setTimeout(loadSoilMoistureReadings, 1000);
+    setTimeout(loadRouterReadings, 1000);
+  })
 })

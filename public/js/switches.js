@@ -32,11 +32,7 @@ function updateConditioningStatus() {
 
 
 $(document).ready(function() {
-    if (currentlySelectedHouse){
-        updateConditioningStatus();
-    } else {
-        registerObserver(updateConditioningStatus);
-    }
+    invokeAfterHousesLoaded(updateConditioningStatus);
     sendAjax('GET',sprinklerSwitchState,'',"sprinklerSwitchState");
     sendAjax('GET',houseHeatingSwitch,'',"houseHeatingSwitch");
     sendAjax('GET',bathVentStatus,'',"bathVentStatus");
