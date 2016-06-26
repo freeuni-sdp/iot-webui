@@ -3,9 +3,9 @@
  */
 var sprinklerSwitchState = "https://private-anon-0daf60376-sprinklerswitch.apiary-mock.com/webapi/houses/";
 var sprinklerSwitchChangeState = "https://private-anon-c802c2370-sprinklerswitch.apiary-mock.com/webapi/houses/";
-var houseHeatingSwitch = "http://private-anon-293e85fef-iotheatingswitch.apiary-mock.com/house/";
-var houseHeatingOn = "https://private-anon-293e85fef-iotheatingswitch.apiary-mock.com/house/";
-var houseHeatingOff ="https://private-anon-293e85fef-iotheatingswitch.apiary-mock.com/house/";
+var houseHeatingSwitch = "https://iot-heating-switch.herokuapp.com/house/";
+var houseHeatingOn = "https://iot-heating-switch.herokuapp.com/house";
+var houseHeatingOff ="https://iot-heating-switch.herokuapp.com/house/";
 var bathVentStatus = "http://private-anon-86028f42b-iotbathventswitch.apiary-mock.com/houses/";
 var bathVentManual = "https://private-anon-67c972f5e-iotbathventswitch.apiary-mock.com/house/";
 var airConditioningRoute = "http://private-anon-d79c364e6-airconditioningswitch.apiary-mock.com/webapi/houses/";
