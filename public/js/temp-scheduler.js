@@ -1,15 +1,15 @@
 /**
  * Created by root_pc on 6/25/2016.
  */
-var currentHouse = 1234;
 var floor = 1;
 var temperatureScheduler = "https://private-09e97-iottemperaturescheduler.apiary-mock.com/webapi/houses/"
                             + currentHouse + "/floors/";
 var setTemperatureScheduler = "https://private-09e97-iottemperaturescheduler.apiary-mock.com/webapi/houses/"
                              + currentHouse + "/floors/";
 
-$(document).ready(function() {
 
+$(document).ready(function() {
+    invokeAfterHousesLoaded(setCurrentHouse);
     $("#submit").click(function (){
         var stardate = $("#start-date").val() + ":00";
         stardate = stardate.replace("T"," ");

@@ -1,7 +1,7 @@
 /**
  * Created by root_pc on 6/24/2016.
  */
-var currentHouse = 1234;
+var currentHouse = currentlySelectedHouse.RowKey._;
 var sprinklerSwitchState = "https://private-anon-0daf60376-sprinklerswitch.apiary-mock.com/webapi/houses/" + currentHouse;
 var sprinklerSwitchChangeState = "https://private-anon-c802c2370-sprinklerswitch.apiary-mock.com/webapi/houses/" + currentHouse;
 var houseHeatingSwitch = "http://private-anon-293e85fef-iotheatingswitch.apiary-mock.com/house/" + currentHouse;
@@ -30,9 +30,13 @@ function updateConditioningStatus() {
     });
 }
 
+function setCurrentHouse(){
+    currentHouse = currentlySelectedHouse.RowKey._;
+}
 
 $(document).ready(function() {
     invokeAfterHousesLoaded(updateConditioningStatus);
+    invokeAfterHousesLoaded(setCurrentHouse);
     sendAjax('GET',sprinklerSwitchState,'',"sprinklerSwitchState");
     sendAjax('GET',houseHeatingSwitch,'',"houseHeatingSwitch");
     sendAjax('GET',bathVentStatus,'',"bathVentStatus");
@@ -164,10 +168,12 @@ function getSprinklerStatus(result) {
 
 
 function getHouseHeatingInfo(result){
-
+    console.log(result.switches);
     var table =  $("#heating-switch-tb");
     table.empty();
-    for (let value of result.values){
+
+    for (var value of result.switches){
+        console.log(value);
         table.append("<tr>");
         table.append("<td>" + value.id + "</td>");
         table.append("<td>" + value.status + "</td>");
