@@ -168,16 +168,18 @@ function getSprinklerStatus(result) {
 
 
 function getHouseHeatingInfo(result){
-    console.log(result.switches);
+
     var table =  $("#heating-switch-tb");
     table.empty();
 
-    for (var value of result.switches){
-        console.log(value);
+    jQuery.each(result.switches, function(i, value) {
         table.append("<tr>");
         table.append("<td>" + value.id + "</td>");
         table.append("<td>" + value.status + "</td>");
         table.append("<td>" + value.available + "</td>");
         table.append("</tr>");
-    }
+    });
+
+
+
 }
