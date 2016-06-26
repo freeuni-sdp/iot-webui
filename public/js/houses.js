@@ -1,5 +1,5 @@
 var housesApiRoutes = {
-  getAllHouses: 'http://private-anon-b483c7d04-iothouseregistry.apiary-mock.com/houses'
+  getAllHouses: 'https://iot-house-registry.herokuapp.com/houses'
 }
 
 var currentlySelectedHouse = undefined;
