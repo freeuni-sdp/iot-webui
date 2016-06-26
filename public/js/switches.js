@@ -1,14 +1,13 @@
 /**
  * Created by root_pc on 6/24/2016.
  */
-var currentHouse = currentlySelectedHouse.RowKey._;
-var sprinklerSwitchState = "https://private-anon-0daf60376-sprinklerswitch.apiary-mock.com/webapi/houses/" + currentHouse;
-var sprinklerSwitchChangeState = "https://private-anon-c802c2370-sprinklerswitch.apiary-mock.com/webapi/houses/" + currentHouse;
-var houseHeatingSwitch = "http://private-anon-293e85fef-iotheatingswitch.apiary-mock.com/house/" + currentHouse;
-var houseHeatingOn = "https://private-anon-293e85fef-iotheatingswitch.apiary-mock.com/house/" + currentHouse + "/floor/";
-var houseHeatingOff ="https://private-anon-293e85fef-iotheatingswitch.apiary-mock.com/house/" + currentHouse  + "/floor/";
-var bathVentStatus = "http://private-anon-86028f42b-iotbathventswitch.apiary-mock.com/houses/" + currentHouse;
-var bathVentManual = "https://private-anon-67c972f5e-iotbathventswitch.apiary-mock.com/house/" + currentHouse +"/action/";
+var sprinklerSwitchState = "https://private-anon-0daf60376-sprinklerswitch.apiary-mock.com/webapi/houses/";
+var sprinklerSwitchChangeState = "https://private-anon-c802c2370-sprinklerswitch.apiary-mock.com/webapi/houses/";
+var houseHeatingSwitch = "http://private-anon-293e85fef-iotheatingswitch.apiary-mock.com/house/";
+var houseHeatingOn = "https://private-anon-293e85fef-iotheatingswitch.apiary-mock.com/house/";
+var houseHeatingOff ="https://private-anon-293e85fef-iotheatingswitch.apiary-mock.com/house/";
+var bathVentStatus = "http://private-anon-86028f42b-iotbathventswitch.apiary-mock.com/houses/";
+var bathVentManual = "https://private-anon-67c972f5e-iotbathventswitch.apiary-mock.com/house/";
 var airConditioningRoute = "http://private-anon-d79c364e6-airconditioningswitch.apiary-mock.com/webapi/houses/";
 
 
@@ -30,16 +29,12 @@ function updateConditioningStatus() {
     });
 }
 
-function setCurrentHouse(){
-    currentHouse = currentlySelectedHouse.RowKey._;
-}
 
-$(document).ready(function() {
-    invokeAfterHousesLoaded(updateConditioningStatus);
-    invokeAfterHousesLoaded(setCurrentHouse);
-    sendAjax('GET',sprinklerSwitchState,'',"sprinklerSwitchState");
-    sendAjax('GET',houseHeatingSwitch,'',"houseHeatingSwitch");
-    sendAjax('GET',bathVentStatus,'',"bathVentStatus");
+
+function makeAllRequestAfterLoadHouse(){
+    sendAjax('GET',sprinklerSwitchState + currentlySelectedHouse.RowKey._,'',"sprinklerSwitchState");
+    sendAjax('GET',houseHeatingSwitch + currentlySelectedHouse.RowKey._,'',"houseHeatingSwitch");
+    sendAjax('GET',bathVentStatus +  currentlySelectedHouse.RowKey._,'',"bathVentStatus");
     $('select#air-conditioning').change(function() {
         $.ajax({
             type: 'POST',
@@ -55,7 +50,7 @@ $(document).ready(function() {
             sprinklerSwitchStateParams.set_status = "off"
         }
         sprinklerSwitchStateParams.timeout = $("#sprinkler-switch-change-time").val() == '' ? 60 : $("#sprinkler-switch-change-time").val()
-        sendAjax('PUT',sprinklerSwitchChangeState,sprinklerSwitchStateParams,"sprinklerSwitchChangeState");
+        sendAjax('PUT',sprinklerSwitchChangeState + currentlySelectedHouse.RowKey._,sprinklerSwitchStateParams,"sprinklerSwitchChangeState");
     });
 
     $(".checkbox").change(function(){
@@ -67,7 +62,7 @@ $(document).ready(function() {
             data.period = period == '' ? 600 : period;
             $.ajax({
                 type: 'PUT',
-                url: houseHeatingOn + number,
+                url: houseHeatingOn + currentlySelectedHouse.RowKey._ + "/floor/" + number,
                 dataType: 'json',
                 data:data,
                 complete : function(){
@@ -77,7 +72,7 @@ $(document).ready(function() {
         }else{
             $.ajax({
                 type: 'DELETE',
-                url: houseHeatingOff + number,
+                url: houseHeatingOff + currentlySelectedHouse.RowKey._ + "/floor/" + number,
                 complete : function(){
                     sendAjax('GET',bathVentStatus,'',"bathVentStatus");
                 }
@@ -86,7 +81,7 @@ $(document).ready(function() {
     });
 
     $("#bath-vent-manual").change(function (){
-        var link = bathVentManual;
+        var link =  bathVentManual + currentlySelectedHouse.RowKey._ + "/action/";
         console.log($(this));
         if($(this)[0].checked){
             link +="on";
@@ -103,6 +98,12 @@ $(document).ready(function() {
         });
 
     });
+}
+
+$(document).ready(function() {
+    invokeAfterHousesLoaded(updateConditioningStatus);
+    invokeAfterHousesLoaded(makeAllRequestAfterLoadHouse);
+
 });
 
 function sendAjax(method,link,params,type) {
