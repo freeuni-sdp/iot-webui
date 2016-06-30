@@ -1,15 +1,7 @@
 var thermometerRoutes = {
-  baseUrl: 'https://private-anon-3dbf9186a-iotroomthermometer.apiary-mock.com/webapi/houses/',
+  baseUrl: 'https://iot-room-thermometer.herokuapp.com/webapi/houses/',
   floorsSufix: '/floors/'
 };
-
-function logError(xhr,textStatus,err) {
-  console.log("readyState: " + xhr.readyState);
-  console.log("responseText: "+ xhr.responseText);
-  console.log("status: " + xhr.status);
-  console.log("text status: " + textStatus);
-  console.log("error: " + err);
-}
 
 function insertTableRow(domElement, entries) {
   domElement.append('<tr>');
@@ -22,6 +14,8 @@ function insertTableRow(domElement, entries) {
 function updateThermometerUI(result) {
   var tempTable = $('tbody#room-thermometer');
   tempTable.empty();
+  if (!result)
+    return;
   for (var elem of result) {
     insertTableRow(tempTable, [elem.floor_id, elem.temperature]);
   }
@@ -45,6 +39,8 @@ var bathLightRoutes = {
 function updateBathLightUI(result) {
   var bathLightTable = $('tbody#bath-light-sensor');
   bathLightTable.empty();
+  if (!result)
+    return;
   insertTableRow(bathLightTable, [result.status ? 'On': 'Off', result.time]);
 }
 
@@ -60,7 +56,7 @@ function loadBathLightReadings() {
 }
 
 var bathHumidityRoutes = {
-  lastMeasurement: 'http://private-anon-a083cdbb1-iotbathhumiditysensor.apiary-mock.com/webapi/houses/',
+  lastMeasurement: 'https://iot-bath-humidity-sensor.herokuapp.com/webapi/houses/',
   num_measurements: '/num_measurements/'
 }
 
@@ -68,9 +64,13 @@ var bathHumidityRoutes = {
 var numMeasurementsToDisplay = 4;
 
 function updateBathHumidityUI(result) {
+  var humBody = $('tbody#bath-humidity-sensor');
+  humBody.empty();
+  if (!result)
+    return;
   for (var hum of result) {
     insertTableRow(
-      $('tbody#bath-humidity-sensor'),
+      humBody,
       [hum.humidity, hum.measurement_time]
     );
   }
@@ -95,6 +95,8 @@ var soilMoistureRoutes = {
 function updateSoilMoistureView(result) {
   var soilMoistureTable = $('tbody#soil-moisture-sensor');
   soilMoistureTable.empty();
+  if (!result)
+    return;
   var available = result.available ? 'Yes' : 'No';
   insertTableRow(soilMoistureTable, [result.sensorValueMessage, available]);
 }
@@ -118,6 +120,8 @@ var routerApiRoutes = {
 function updateDevicesUI(result) {
   var devicesTable = $('tbody#mac-addresses');
   devicesTable.empty();
+  if (!result)
+    return;
   for (var device of result) {
     insertTableRow(devicesTable, [device.deviceName, device.deviceMacAddress]);
   }

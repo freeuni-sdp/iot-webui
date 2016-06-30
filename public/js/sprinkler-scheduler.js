@@ -1,5 +1,5 @@
 var sprinklerSchedulerApiRoutes = {
-  getScheduleStart: 'https://private-anon-1655d467b-sprinklerscheduler.apiary-mock.com/houses/',
+  getScheduleStart: 'https://iot-sprinkler-scheduler.herokuapp.com/houses/',
   getSchedyleEnd: '/schedule'
 };
 
@@ -28,7 +28,11 @@ function loadSprinklerSchedulerReadings() {
     type: 'GET',
     dataType: 'json',
     url: finalUrl,
-    success: updateSprinklerSchedulerUI
+    success: updateSprinklerSchedulerUI,
+    error: function(xhr,textStatus,err) {
+      alert('unable to get data, see log in console');
+      logError(xhr,textStatus,err);
+    }
   });
 }
 
@@ -72,12 +76,10 @@ function updateSchedule() {
     contenType: 'application/json',
     statusCode: {
       200: function() {
-        console.log('mmmkay');
-        alert('Sprinkler Schedule info loaded');
+        alert('schedule successfully updated');
       },
       404: function() {
-        console.log('not mmmkay');
-        alert('couldnt find sprinkler scheduler resource for given house');
+        alert('resource not found');
       }
     }
   });

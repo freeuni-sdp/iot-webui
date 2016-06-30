@@ -21,6 +21,14 @@ var routeMap = {
 	}
 };
 
+function logError(xhr,textStatus,err) {
+  console.log("readyState: " + xhr.readyState);
+  console.log("responseText: "+ xhr.responseText);
+  console.log("status: " + xhr.status);
+  console.log("text status: " + textStatus);
+  console.log("error: " + err);
+}
+
 function changeRouteState(route, title){
 	if (!(route in routeMap))
 		return;
