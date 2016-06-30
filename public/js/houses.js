@@ -39,10 +39,6 @@ function initHousesDropdown(result) {
   });
 }
 
-function refresh() {
-  load(window.location.pathname);
-}
-
 $(document).ready(function() {
   $.ajax({
     type: 'GET',

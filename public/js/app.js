@@ -29,12 +29,15 @@ function changeRouteState(route, title){
 		title: title
 	}, title, route);
 	document.title = title;
-	load(route);
+	loadRoute(route);
 }
 
-function load(route){
-	if (routeMap[route])
+function loadRoute(route){
+	if (routeMap[route]) {
 		routeMap[route]();
+	} else {
+		routeMap['switches']();
+	}
 }
 
 function clearAllTimeouts() {
@@ -42,6 +45,10 @@ function clearAllTimeouts() {
 	while (id--) {
 		window.clearTimeout(id);
 	}
+}
+
+function refresh() {
+  loadRoute(window.location.pathname);
 }
 
 $(document).ready(function() {
@@ -57,14 +64,13 @@ $(document).ready(function() {
 		if (state != null) {
 			currentRoute = state.url;
 			document.title = state.title;
-			load(state.url);
+			loadRoute(state.url);
 		} else {
 			currentRoute = '/pingstatus'
 			document.title = 'pingstatus';
-			load('pingstatus');
+			loadRoute('pingstatus');
 		}
 	});
 
-	// redirect default to pingstatus
-	changeRouteState('/switches', 'switches');
+	refresh();
 });
