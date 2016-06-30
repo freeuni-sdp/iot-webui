@@ -70,7 +70,7 @@ $(document).ready(function() {
 function drawScheduler(res){
     var table =  $("#temp-result");
     table.empty();
-    for (let value of res){
+    for (var value of res){
         table.append("<tr>");
         table.append("<td>" + value.dateFrom + "</td>");
         table.append("<td>" + value.dateTo + "</td>");

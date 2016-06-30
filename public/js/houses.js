@@ -10,7 +10,6 @@ function invokeAfterHousesLoaded(fun) {
   if (currentlySelectedHouse) {
     fun();
   } else {
-    console.log('loading');
     houseInfoLoadedObservers.push(fun);
   }
 }
@@ -21,7 +20,7 @@ function initHousesDropdown(result) {
   for (var i in housesList) {
     if (i == 0) {
       currentlySelectedHouse = housesList[i];
-      for (let observer of houseInfoLoadedObservers) {
+      for (var observer of houseInfoLoadedObservers) {
         observer();
       }
       houseInfoLoadedObservers = [];

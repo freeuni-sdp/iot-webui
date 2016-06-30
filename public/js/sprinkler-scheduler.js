@@ -12,7 +12,7 @@ function updateSprinklerSchedulerUI(result) {
 
   var excludedList = $('#excluded-list');
   excludedList.find('*').not('.disabled').remove();
-  for (let date of result.excluded) {
+  for (var date of result.excluded) {
     finalValue = [date.day, date.month, date.year].join('/');
     excludedList.append('<a class="list-group-item">' + finalValue + '</a>');
   }
@@ -67,10 +67,18 @@ function updateSchedule() {
   $.ajax({
     type: 'POST',
     url: finalUrl,
+    dataType: 'json',
     data: JSON.stringify(scheduledata),
     contenType: 'application/json',
-    success: function () {
-      console.log('mmmkay');
+    statusCode: {
+      200: function() {
+        console.log('mmmkay');
+        alert('Sprinkler Schedule info loaded');
+      },
+      404: function() {
+        console.log('not mmmkay');
+        alert('couldnt find sprinkler scheduler resource for given house');
+      }
     }
   });
 }

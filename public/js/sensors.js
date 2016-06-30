@@ -13,7 +13,7 @@ function logError(xhr,textStatus,err) {
 
 function insertTableRow(domElement, entries) {
   domElement.append('<tr>');
-  for (let entry of entries) {
+  for (var entry of entries) {
     domElement.append('<td>' + entry + '</td>');
   }
   domElement.append('</tr>');
@@ -22,7 +22,7 @@ function insertTableRow(domElement, entries) {
 function updateThermometerUI(result) {
   var tempTable = $('tbody#room-thermometer');
   tempTable.empty();
-  for (let elem of result) {
+  for (var elem of result) {
     insertTableRow(tempTable, [elem.floor_id, elem.temperature]);
   }
 }
@@ -68,7 +68,7 @@ var bathHumidityRoutes = {
 var numMeasurementsToDisplay = 4;
 
 function updateBathHumidityUI(result) {
-  for (let hum of result) {
+  for (var hum of result) {
     insertTableRow(
       $('tbody#bath-humidity-sensor'),
       [hum.humidity, hum.measurement_time]
@@ -118,8 +118,7 @@ var routerApiRoutes = {
 function updateDevicesUI(result) {
   var devicesTable = $('tbody#mac-addresses');
   devicesTable.empty();
-  for (let device of result) {
-    console.log(device);
+  for (var device of result) {
     insertTableRow(devicesTable, [device.deviceName, device.deviceMacAddress]);
   }
 }
@@ -153,7 +152,6 @@ function loadRouterReadings() {
 $(document).ready(function() {
   // add wrapper to make sure houses info loads first
   invokeAfterHousesLoaded(function() {
-    console.log('triggering');
     setTimeout(loadThermometerReadings, 1000);
     setTimeout(loadBathLightReadings, 1000);
     setTimeout(loadBathHumidityReadings, 1000);
