@@ -53,7 +53,7 @@ function refresh() {
 
 $(document).ready(function() {
 	$.ajaxPrefilter(function( options, originalOptions, jqXHR ) {
-    options.async = true;
+		options.async = true;
 	});
 	$(document).on('click', 'a', function(event){
 		event.preventDefault();
