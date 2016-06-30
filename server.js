@@ -11,4 +11,4 @@ app.get('*', function(req, res){
 
 // if deployed to heroku, port will be set from env variable,
 // while running locally, port will be 8080
-app.listen(process.env.PORT || 8444)
+app.listen(process.env.PORT || 8080)

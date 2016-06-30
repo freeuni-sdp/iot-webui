@@ -33,7 +33,6 @@ function changeRouteState(route, title){
 }
 
 function loadRoute(route){
-	console.log(route);
 	if (routeMap[route]) {
 		routeMap[route]();
 	} else {
@@ -53,6 +52,9 @@ function refresh() {
 }
 
 $(document).ready(function() {
+	$.ajaxPrefilter(function( options, originalOptions, jqXHR ) {
+    options.async = true;
+	});
 	$(document).on('click', 'a', function(event){
 		event.preventDefault();
 		var route = $(this).attr('href');
