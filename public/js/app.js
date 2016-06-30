@@ -33,10 +33,11 @@ function changeRouteState(route, title){
 }
 
 function loadRoute(route){
+	console.log(route);
 	if (routeMap[route]) {
 		routeMap[route]();
 	} else {
-		routeMap['switches']();
+		routeMap['/switches']();
 	}
 }
 
@@ -67,7 +68,7 @@ $(document).ready(function() {
 			loadRoute(state.url);
 		} else {
 			currentRoute = '/pingstatus'
-			document.title = 'pingstatus';
+				document.title = 'pingstatus';
 			loadRoute('pingstatus');
 		}
 	});
