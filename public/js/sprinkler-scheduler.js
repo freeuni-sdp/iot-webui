@@ -29,10 +29,7 @@ function loadSprinklerSchedulerReadings() {
     dataType: 'json',
     url: finalUrl,
     success: updateSprinklerSchedulerUI,
-    error: function(xhr,textStatus,err) {
-      alert('unable to get data, see log in console');
-      logError(xhr,textStatus,err);
-    }
+    error: logError
   });
 }
 

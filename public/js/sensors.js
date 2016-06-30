@@ -33,7 +33,7 @@ function loadThermometerReadings() {
 }
 
 var bathLightRoutes = {
-  baseUrl: 'http://private-anon-e7aca08b3-bathlightsensor.apiary-mock.com/webapi/status/house/'
+  baseUrl: 'http://iot-bath-light-sensor.herokuapp.com/webapi/status/house/'
 }
 
 function updateBathLightUI(result) {
@@ -112,7 +112,7 @@ function loadSoilMoistureReadings() {
 }
 
 var routerApiRoutes = {
-  baseUrl: 'https://private-anon-b7cd7340c-iotrouter.apiary-mock.com/webapi/houses/',
+  baseUrl: 'https://iot-router.herokuapp.com/webapi/houses/',
   deviceListSufix: '/addresses',
   ownerAtHomeSufix: '/available'
 }

@@ -21,7 +21,8 @@ var routeMap = {
 	}
 };
 
-function logError(xhr,textStatus,err) {
+function logError(xhr,textStatus,err, alertMsg) {
+	alert('error ocurred, see log in console');
   console.log("readyState: " + xhr.readyState);
   console.log("responseText: "+ xhr.responseText);
   console.log("status: " + xhr.status);
