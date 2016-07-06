@@ -89,7 +89,7 @@ function loadBathHumidityReadings() {
 }
 
 var soilMoistureRoutes = {
-  baseUrl: 'https://private-anon-ccd5374bf-sdp2.apiary-mock.com/house/'
+  baseUrl: 'https://iot-soil-moisture-sensor.herokuapp.com/house/'
 }
 
 function updateSoilMoistureView(result) {
@@ -98,7 +98,7 @@ function updateSoilMoistureView(result) {
   if (!result)
     return;
   var available = result.available ? 'Yes' : 'No';
-  insertTableRow(soilMoistureTable, [result.sensorValueMessage, available]);
+  insertTableRow(soilMoistureTable, [result.sensorValue, available]);
 }
 
 function loadSoilMoistureReadings() {

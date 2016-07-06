@@ -1,14 +1,14 @@
 /**
  * Created by root_pc on 6/24/2016.
  */
-var sprinklerSwitchState = "https://private-anon-0daf60376-sprinklerswitch.apiary-mock.com/webapi/houses/";
-var sprinklerSwitchChangeState = "https://private-anon-c802c2370-sprinklerswitch.apiary-mock.com/webapi/houses/";
-var houseHeatingSwitch = "https://private-anon-945ad82df-iotheatingswitch.apiary-mock.com/house/";
-var houseHeatingOn = "https://private-anon-945ad82df-iotheatingswitch.apiary-mock.com/house/";
-var houseHeatingOff = "https://private-anon-945ad82df-iotheatingswitch.apiary-mock.com/house/";
-var bathVentStatus = "http://private-anon-86028f42b-iotbathventswitch.apiary-mock.com/houses/";
-var bathVentManual = "https://private-anon-67c972f5e-iotbathventswitch.apiary-mock.com/house/";
-var airConditioningRoute = "http://private-anon-d79c364e6-airconditioningswitch.apiary-mock.com/webapi/houses/";
+var sprinklerSwitchState = "https://iot-sprinkler-switch.herokuapp.com/webapi/houses/";
+var sprinklerSwitchChangeState = "https://iot-sprinkler-switch.herokuapp.com/webapi/houses/";
+var houseHeatingSwitch = "https://iot-heating-switch.herokuapp.com/house/";
+var houseHeatingOn = "https://iot-heating-switch.herokuapp.com/house/";
+var houseHeatingOff = "https://iot-heating-switch.herokuapp.com/house/";
+var bathVentStatus = "http://iot-bath-vent-switch.herokuapp.com/houses/";
+var bathVentManual = "http://iot-bath-vent-switch.herokuapp.com/house/";
+var airConditioningRoute = "https://iot-air-conditioning-switch.herokuapp.com/webapi/houses/";
 
 
 var sprinklerSwitchStateParams = {
@@ -111,7 +111,8 @@ function sendAjax(method,link,params,type) {
         type: method,
         url: link,
         dataType: 'json',
-        data: params,
+        contentType:"application/json; charset=utf-8",
+        data: JSON.stringify(params),
         success: function (result) {
             initial(result,type);
         }
@@ -124,7 +125,7 @@ function initial(result,type){
             getSprinklerStatus(result);
             break;
         case "sprinklerSwitchChangeState":
-            setSprinklerStatus();
+            setSprinklerStatus(result);
             break;
         case "houseHeatingSwitch":
             getHouseHeatingInfo(result);
@@ -141,9 +142,9 @@ function getBathStatus(result){
     $("#bath-vent-status").html(result.status);
 }
 
-function setSprinklerStatus(){
+function setSprinklerStatus(result){
     $("#sprinkler-switch-change-time").val('');
-    sendAjax('GET',sprinklerSwitchState,'');
+    sendAjax('GET',sprinklerSwitchState+result.house_id,'');
 }
 
 function updateHeatingInfo(result){
