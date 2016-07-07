@@ -6,8 +6,8 @@ var sprinklerSwitchChangeState = "https://iot-sprinkler-switch.herokuapp.com/web
 var houseHeatingSwitch = "https://iot-heating-switch.herokuapp.com/house/";
 var houseHeatingOn = "https://iot-heating-switch.herokuapp.com/house/";
 var houseHeatingOff = "https://iot-heating-switch.herokuapp.com/house/";
-var bathVentStatus = "http://iot-bath-vent-switch.herokuapp.com/houses/";
-var bathVentManual = "http://iot-bath-vent-switch.herokuapp.com/house/";
+var bathVentStatus = "https://iot-bath-vent-switch.herokuapp.com/houses/";
+var bathVentManual = "https://iot-bath-vent-switch.herokuapp.com/house/";
 var airConditioningRoute = "https://iot-air-conditioning-switch.herokuapp.com/webapi/houses/";
 
 
