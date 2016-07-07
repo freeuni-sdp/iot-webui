@@ -33,7 +33,7 @@ function loadThermometerReadings() {
 }
 
 var bathLightRoutes = {
-  baseUrl: 'http://iot-bath-light-sensor.herokuapp.com/webapi/status/house/'
+  baseUrl: 'https://iot-bath-light-sensor.herokuapp.com/webapi/status/house/'
 }
 
 function updateBathLightUI(result) {
@@ -89,7 +89,7 @@ function loadBathHumidityReadings() {
 }
 
 var soilMoistureRoutes = {
-  baseUrl: 'https://iot-soil-moisture-sensor.herokuapp.com/house/'
+  baseUrl: 'https://private-anon-ccd5374bf-sdp2.apiary-mock.com/house/'
 }
 
 function updateSoilMoistureView(result) {
@@ -98,7 +98,7 @@ function updateSoilMoistureView(result) {
   if (!result)
     return;
   var available = result.available ? 'Yes' : 'No';
-  insertTableRow(soilMoistureTable, [result.sensorValue, available]);
+  insertTableRow(soilMoistureTable, [result.sensorValueMessage, available]);
 }
 
 function loadSoilMoistureReadings() {
