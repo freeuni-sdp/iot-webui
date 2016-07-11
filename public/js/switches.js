@@ -7,7 +7,7 @@ var houseHeatingSwitch = "https://iot-heating-switch.herokuapp.com/house/";
 var houseHeatingOn = "https://iot-heating-switch.herokuapp.com/house/";
 var houseHeatingOff = "https://iot-heating-switch.herokuapp.com/house/";
 var bathVentStatus = "https://iot-bath-vent-switch.herokuapp.com/houses/";
-var bathVentManual = "https://iot-bath-vent-switch.herokuapp.com/house/";
+var bathVentManual = "https://iot-bath-vent-switch.herokuapp.com/houses/";
 var airConditioningRoute = "https://iot-air-conditioning-switch.herokuapp.com/webapi/houses/";
 
 
@@ -82,18 +82,17 @@ function makeAllRequestAfterLoadHouse(){
 
     $("#bath-vent-manual").change(function (){
         var link =  bathVentManual + currentlySelectedHouse.RowKey._ + "/action/";
-        console.log($(this));
         if($(this)[0].checked){
             link +="on";
         }else{
             link +="off";
         }
         $.ajax({
-            type: 'PUT',
+            type: 'POST',
             url: link,
             dataType: 'json',
-            complete : function(){
-                sendAjax('GET',bathVentStatus,'',"bathVentStatus");
+            success : function(data){
+                getBathStatus(data);
             }
         });
 
