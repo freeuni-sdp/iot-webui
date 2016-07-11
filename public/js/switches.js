@@ -32,9 +32,9 @@ function updateConditioningStatus() {
 
 
 function makeAllRequestAfterLoadHouse(){
-    sendAjax('GET',sprinklerSwitchState + currentlySelectedHouse.RowKey._,'',"sprinklerSwitchState");
-    sendAjax('GET',houseHeatingSwitch + currentlySelectedHouse.RowKey._,'',"houseHeatingSwitch");
-    sendAjax('GET',bathVentStatus +  currentlySelectedHouse.RowKey._,'',"bathVentStatus");
+    sendAjax('GET',sprinklerSwitchState + currentlySelectedHouse.RowKey._,null,getSprinklerStatus);
+    sendAjax('GET',houseHeatingSwitch + currentlySelectedHouse.RowKey._,null,getHouseHeatingInfo);
+    sendAjax('GET',bathVentStatus +  currentlySelectedHouse.RowKey._,null,getBathStatus);
     $('select#air-conditioning').change(function() {
         $.ajax({
             type: 'POST',
@@ -50,7 +50,7 @@ function makeAllRequestAfterLoadHouse(){
             sprinklerSwitchStateParams.set_status = "off"
         }
         sprinklerSwitchStateParams.timeout = $("#sprinkler-switch-change-time").val() == '' ? 60 : $("#sprinkler-switch-change-time").val()
-        sendAjax('PUT',sprinklerSwitchChangeState + currentlySelectedHouse.RowKey._,sprinklerSwitchStateParams,"sprinklerSwitchChangeState");
+        sendAjax('PUT',sprinklerSwitchChangeState + currentlySelectedHouse.RowKey._,sprinklerSwitchStateParams, setSprinklerStatus);
     });
 
     $(".checkbox").change(function(){
@@ -60,23 +60,9 @@ function makeAllRequestAfterLoadHouse(){
             var data = {};
             var period = $("#heater-floor1-n-" +number).val();
             data.period = period == '' ? 600 : period;
-            $.ajax({
-                type: 'PUT',
-                url: houseHeatingOn + currentlySelectedHouse.RowKey._ + "/floor/" + number,
-                dataType: 'json',
-                data:data,
-                complete : function(){
-                    sendAjax('GET',houseHeatingSwitch,'',"houseHeatingSwitch");
-                }
-            });
+            sendAjax('PUT', houseHeatingOn + currentlySelectedHouse.RowKey._ + "/floor/" + number, data, getHouseHeatingInfo)
         }else{
-            $.ajax({
-                type: 'DELETE',
-                url: houseHeatingOff + currentlySelectedHouse.RowKey._ + "/floor/" + number,
-                complete : function(){
-                    sendAjax('GET',bathVentStatus,'',"bathVentStatus");
-                }
-            });
+            sendAjax('DELETE', houseHeatingOff + currentlySelectedHouse.RowKey._ + "/floor/" + number, null, null)
         }
     });
 
@@ -105,35 +91,18 @@ $(document).ready(function() {
 
 });
 
-function sendAjax(method,link,params,type) {
+function sendAjax(method, link, params, callback) {
     $.ajax({
         type: method,
         url: link,
         dataType: 'json',
         contentType:"application/json; charset=utf-8",
-        data: JSON.stringify(params),
+        data: (params == null? null : JSON.stringify(params)),
         success: function (result) {
-            initial(result,type);
+            if(callback)
+                callback(result);
         }
     });
-}
-
-function initial(result,type){
-    switch (type) {
-        case "sprinklerSwitchState":
-            getSprinklerStatus(result);
-            break;
-        case "sprinklerSwitchChangeState":
-            setSprinklerStatus(result);
-            break;
-        case "houseHeatingSwitch":
-            getHouseHeatingInfo(result);
-            break;
-        case "bathVentStatus":
-            getBathStatus(result);
-        default :
-            break;
-    }
 }
 
 
@@ -142,8 +111,8 @@ function getBathStatus(result){
 }
 
 function setSprinklerStatus(result){
-    $("#sprinkler-switch-change-time").val('');
-    sendAjax('GET',sprinklerSwitchState+result.house_id,'');
+    $('#sprinkler-switch-current-state').html(result.status);
+    $('#sprinkler-switch-current-time').html(result.seconds_left);
 }
 
 function updateHeatingInfo(result){
@@ -161,7 +130,7 @@ function getSprinklerStatus(result) {
             if (t <= 0) {
                 $('#sprinkler-switch-current-time').html('0');
                 clearInterval(timeIntervalSprinklerSwitch);
-                sendAjax('GET',sprinklerSwitchState,'',"sprinklerSwitchState");
+                sendAjax('GET',sprinklerSwitchState, null, getSprinklerStatus);
             }
         }, 1000);
     }
