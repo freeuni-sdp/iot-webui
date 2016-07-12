@@ -1,5 +1,5 @@
 var sprinklerSchedulerApiRoutes = {
-  getScheduleStart: 'https://iot-sprinkler-scheduler.herokuapp.com/houses/',
+  getScheduleStart: 'https://iot-sprinkler-scheduler.herokuapp.com/webapi/houses/',
   getSchedyleEnd: '/schedule'
 };
 
@@ -13,8 +13,7 @@ function updateSprinklerSchedulerUI(result) {
   var excludedList = $('#excluded-list');
   excludedList.find('*').not('.disabled').remove();
   for (var date of result.excluded) {
-    finalValue = [date.day, date.month, date.year].join('/');
-    excludedList.append('<a class="list-group-item">' + finalValue + '</a>');
+    excludedList.append('<a class="list-group-item">' + date + '</a>');
   }
 
   updateSchedule();
@@ -47,6 +46,7 @@ function addToExclutions() {
     split('-').
     reverse().
     map(x => parseInt(x).toString()).
+    map(x => x.length === 1 ? '0' + x : x).
     join('/');
   $('#excluded-list').append('<a class="list-group-item">' + inputReading + '</a>');
 }
