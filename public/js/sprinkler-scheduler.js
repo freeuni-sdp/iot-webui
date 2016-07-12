@@ -15,8 +15,6 @@ function updateSprinklerSchedulerUI(result) {
   for (var date of result.excluded) {
     excludedList.append('<a class="list-group-item">' + date + '</a>');
   }
-
-  updateSchedule();
 }
 
 function loadSprinklerSchedulerReadings() {
