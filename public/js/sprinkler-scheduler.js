@@ -18,7 +18,6 @@ function updateSprinklerSchedulerUI(result) {
 }
 
 function loadSprinklerSchedulerReadings() {
-  console.log('loading');
   var finalUrl = sprinklerSchedulerApiRoutes.getScheduleStart +
     currentlySelectedHouse.RowKey._ + sprinklerSchedulerApiRoutes.getSchedyleEnd;
   $.ajax({
@@ -31,7 +30,6 @@ function loadSprinklerSchedulerReadings() {
 }
 
 function deleteFromExclutions() {
-  console.log('delete');
   $('#excluded-list .active').remove();
 }
 
@@ -51,10 +49,10 @@ function addToExclutions() {
 
 function updateSchedule() {
   scheduledata = {
-    startMonth: $('#start-month').val(),
-    endMonth: $('#end-month').val(),
-    afterSunRise: $('#after-sunrise').val(),
-    beforeSunSet: $('#before-sunset').val(),
+    startMonth: parseInt($('#start-month').val()),
+    endMonth: parseInt($('#end-month').val()),
+    afterSunRise: parseFloat($('#after-sunrise').val()),
+    beforeSunSet: parseFloat($('#before-sunset').val()),
     excluded: $('#excluded-list .list-group-item').not('.disabled').
       map(function() {
         return $(this).text();
@@ -64,6 +62,10 @@ function updateSchedule() {
   var finalUrl = sprinklerSchedulerApiRoutes.getScheduleStart +
     currentlySelectedHouse.RowKey._ + sprinklerSchedulerApiRoutes.getSchedyleEnd;
   $.ajax({
+    headers: {
+      'Accept': 'application/json',
+      'Content-Type': 'application/json'
+    },
     type: 'POST',
     url: finalUrl,
     dataType: 'json',
