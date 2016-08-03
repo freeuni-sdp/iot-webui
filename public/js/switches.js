@@ -2,12 +2,10 @@
  * Created by root_pc on 6/24/2016.
  */
 var sprinklerSwitchState = "https://iot-sprinkler-switch.herokuapp.com/webapi/houses/";
-var sprinklerSwitchChangeState = "https://iot-sprinkler-switch.herokuapp.com/webapi/houses/";
 var houseHeatingSwitch = "https://iot-heating-switch.herokuapp.com/house/";
 var houseHeatingOn = "https://iot-heating-switch.herokuapp.com/house/";
 var houseHeatingOff = "https://iot-heating-switch.herokuapp.com/house/";
 var bathVentStatus = "https://iot-bath-vent-switch.herokuapp.com/houses/";
-var bathVentManual = "https://iot-bath-vent-switch.herokuapp.com/houses/";
 var airConditioningRoute = "https://iot-air-conditioning-switch.herokuapp.com/webapi/houses/";
 
 
@@ -36,11 +34,12 @@ function makeAllRequestAfterLoadHouse(){
     sendAjax('GET',houseHeatingSwitch + currentlySelectedHouse.RowKey._,null,getHouseHeatingInfo);
     sendAjax('GET',bathVentStatus +  currentlySelectedHouse.RowKey._,null,getBathStatus);
     $('select#air-conditioning').change(function() {
-        $.ajax({
-            type: 'POST',
-            url: airConditioningRoute + currentlySelectedHouse.RowKey._,
-            data: JSON.stringify({'status': $(this).val()})
-        });
+        sendAjax('POST',airConditioningRoute + currentlySelectedHouse.RowKey._,JSON.stringify({'status': $(this).val()}),null);
+        // $.ajax({
+        //     type: 'POST',
+        //     url: airConditioningRoute + currentlySelectedHouse.RowKey._,
+        //     data: JSON.stringify({'status': $(this).val()})
+        // });
     })
 
     $("#sprinkler-switch-change-state").change(function () {
@@ -50,7 +49,7 @@ function makeAllRequestAfterLoadHouse(){
             sprinklerSwitchStateParams.set_status = "off"
         }
         sprinklerSwitchStateParams.timeout = $("#sprinkler-switch-change-time").val() == '' ? 60 : $("#sprinkler-switch-change-time").val()
-        sendAjax('PUT',sprinklerSwitchChangeState + currentlySelectedHouse.RowKey._,sprinklerSwitchStateParams, setSprinklerStatus);
+        sendAjax('PUT',sprinklerSwitchState + currentlySelectedHouse.RowKey._,sprinklerSwitchStateParams, setSprinklerStatus);
     });
 
     $(".checkbox").change(function(){
@@ -67,21 +66,11 @@ function makeAllRequestAfterLoadHouse(){
     });
 
     $("#bath-vent-manual").change(function (){
-        var link =  bathVentManual + currentlySelectedHouse.RowKey._ + "/action/";
-        if($(this)[0].checked){
-            link +="on";
-        }else{
-            link +="off";
-        }
-        $.ajax({
-            type: 'POST',
-            url: link,
-            dataType: 'json',
-            success : function(data){
-                getBathStatus(data);
-            }
-        });
+        var params = new Object();
+        params.set_status = $(this)[0].checked ? 'on':'off'
+        params.timeout = '30'
 
+        sendAjax('POST', bathVentStatus+currentlySelectedHouse.RowKey._, params, getBathStatus);
     });
 }
 
@@ -130,7 +119,7 @@ function getSprinklerStatus(result) {
             if (t <= 0) {
                 $('#sprinkler-switch-current-time').html('0');
                 clearInterval(timeIntervalSprinklerSwitch);
-                sendAjax('GET',sprinklerSwitchState, null, getSprinklerStatus);
+                sendAjax('GET',sprinklerSwitchState + currentlySelectedHouse.RowKey._, null, getSprinklerStatus);
             }
         }, 1000);
     }
